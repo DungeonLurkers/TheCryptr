@@ -20,13 +20,10 @@ class MessageController(
 
     @PostMapping
     fun createMessage(@RequestBody messageDto: MessageDto): ResponseEntity<MessageEntity> {
-        try {
-            messageEntityService.saveOrUpdate(modelMapper.map(messageDto, MessageEntity::class.java))
-            logger.debug("Message saved in db")
-        } catch (e: Exception) {
-            logger.error(e.message)
-            return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
-        }
+        if (messageDto.id == 0) return ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY)
+        val mapped = modelMapper.map(messageDto, MessageEntity::class.java)
+        messageEntityService.saveOrUpdate(mapped)
+        logger.debug("Message saved in db")
         return ResponseEntity(HttpStatus.CREATED)
     }
 

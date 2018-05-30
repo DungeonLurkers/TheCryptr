@@ -19,9 +19,10 @@ interface MessageEntityService {
 }
 
 @Service
-class MessageEntityServiceImpl : MessageEntityService {
-    @Autowired
-    private lateinit var messageEntityRepository: MessageEntityRepository
+class MessageEntityServiceImpl(
+        @Autowired
+        private val messageEntityRepository: MessageEntityRepository
+) : MessageEntityService {
 
     override fun getAll(): List<MessageEntity> = messageEntityRepository.findAll()
 
