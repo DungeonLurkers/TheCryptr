@@ -9,9 +9,9 @@ import javax.persistence.Id
 
 @Entity
 data class MessageEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int = 0,
-        var body: String = "",
-        var createTime: Date = Date.from(Instant.EPOCH)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int = 0,
+    var body: String = "",
+    var createTime: Date = Date.from(Instant.EPOCH)
 )

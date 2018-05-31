@@ -18,7 +18,6 @@ class MessageServiceTest {
     lateinit var messageEntity: MessageEntity
     lateinit var messageEntityNoId: MessageEntity
 
-
     @Before
     fun setUp() {
         messageEntityRepository = mock(MessageEntityRepository::class.java)

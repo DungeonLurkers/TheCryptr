@@ -13,6 +13,5 @@ class HealthController {
     @GetMapping
     fun health(): ResponseEntity<String> {
         return ResponseEntity("OK", HttpStatus.OK)
-
     }
 }
