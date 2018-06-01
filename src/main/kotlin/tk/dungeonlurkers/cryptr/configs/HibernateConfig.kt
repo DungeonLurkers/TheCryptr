@@ -12,7 +12,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = ["tk.dungeonlurkers.cryptr.repos"], entityManagerFactoryRef = "sessionFactory")

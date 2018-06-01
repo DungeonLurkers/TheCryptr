@@ -20,8 +20,8 @@ interface MessageEntityService {
 
 @Service
 class MessageEntityServiceImpl(
-        @Autowired
-        private val messageEntityRepository: MessageEntityRepository
+    @Autowired
+    private val messageEntityRepository: MessageEntityRepository
 ) : MessageEntityService {
 
     override fun getAll(): List<MessageEntity> = messageEntityRepository.findAll()
@@ -37,5 +37,4 @@ class MessageEntityServiceImpl(
     override fun delete(id: Int) {
         messageEntityRepository.deleteById(id)
     }
-
 }
