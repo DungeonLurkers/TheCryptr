@@ -8,6 +8,8 @@ import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.InjectionPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class AppConfig {
@@ -24,4 +26,7 @@ class AppConfig {
         mapper.configuration.provider = springProvider
         return mapper
     }
+
+    @Bean
+    fun getPasswordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 }

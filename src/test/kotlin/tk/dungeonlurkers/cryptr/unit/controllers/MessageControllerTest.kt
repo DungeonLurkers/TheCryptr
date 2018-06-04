@@ -18,14 +18,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import tk.dungeonlurkers.cryptr.controllers.MessageController
 import tk.dungeonlurkers.cryptr.dtos.MessageDto
 import tk.dungeonlurkers.cryptr.entities.MessageEntity
-import tk.dungeonlurkers.cryptr.services.MessageEntityService
+import tk.dungeonlurkers.cryptr.services.MessageEntityDao
 import java.time.Instant
 import java.util.*
 
 @SpringBootTest
 class MessageControllerTest {
     lateinit var messageController: MessageController
-    lateinit var messageEntityService: MessageEntityService
+    lateinit var messageEntityService: MessageEntityDao
     lateinit var modelMapper: ModelMapper
     lateinit var logger: Logger
     lateinit var mockMvc: MockMvc
@@ -35,14 +35,14 @@ class MessageControllerTest {
     @Before
     fun setUp() {
         modelMapper = mock(ModelMapper::class.java)
-        messageEntityService = mock(MessageEntityService::class.java)
+        messageEntityService = mock(MessageEntityDao::class.java)
         logger = LoggerFactory.getLogger(MessageController::class.java)
         messageController = MessageController(messageEntityService, logger, modelMapper)
         mockMvc = MockMvcBuilders.standaloneSetup(messageController).build()
 
         val date = Date.from(Instant.now())
         val messageBody = "TestMessageLel"
-        val messageId = 1
+        val messageId = UUID.randomUUID()
 
         messageDto = MessageDto(messageId, messageBody, date)
         messageEntity = MessageEntity(messageId, messageBody, date)
@@ -102,8 +102,8 @@ class MessageControllerTest {
     @Test
     fun getMessageByIdSuccessTest() {
         // Arrange
-        val id = 1
-        `when`(messageEntityService.findById(1)).thenReturn(messageEntity)
+        val id = messageEntity.id
+        `when`(messageEntityService.findById(id)).thenReturn(messageEntity)
         `when`(modelMapper.map(any(MessageEntity::class.java), eq(MessageDto::class.java)))
                 .thenReturn(messageDto)
 

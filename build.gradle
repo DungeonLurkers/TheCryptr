@@ -34,12 +34,14 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
     // https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring
     compile group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '1.1.0'
+
 
 
     testCompile 'org.mockito:mockito-core:1.10.19'
