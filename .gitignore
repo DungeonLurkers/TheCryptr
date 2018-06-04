@@ -4,3 +4,6 @@ build
 gradlew
 gradlew.bat
 .gradle
+META-INF/MANIFEST.MF
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties

@@ -5,15 +5,15 @@ import org.junit.Test
 import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
 import tk.dungeonlurkers.cryptr.entities.MessageEntity
-import tk.dungeonlurkers.cryptr.services.MessageEntityRepository
-import tk.dungeonlurkers.cryptr.services.MessageEntityService
-import tk.dungeonlurkers.cryptr.services.MessageEntityServiceImpl
+import tk.dungeonlurkers.cryptr.repos.MessageEntityRepository
+import tk.dungeonlurkers.cryptr.services.MessageEntityDao
+import tk.dungeonlurkers.cryptr.services.impl.MessageEntityServiceImpl
 import java.time.Instant
 import java.util.*
 
 @SpringBootTest
-class MessageServiceTest {
-    lateinit var messageEntityService: MessageEntityService
+class MessageDaoTest {
+    lateinit var messageEntityService: MessageEntityDao
     lateinit var messageEntityRepository: MessageEntityRepository
     lateinit var messageEntity: MessageEntity
     lateinit var messageEntityNoId: MessageEntity
@@ -25,10 +25,10 @@ class MessageServiceTest {
 
         val date = Date.from(Instant.now())
         val messageBody = "TestMessageLel"
-        val messageId = 1
+        val messageId = UUID.randomUUID()
 
         messageEntity = MessageEntity(messageId, messageBody, date)
-        messageEntityNoId = MessageEntity(0, messageBody, date)
+        messageEntityNoId = MessageEntity(UUID.randomUUID(), messageBody, date)
     }
 
     @Test
@@ -42,11 +42,12 @@ class MessageServiceTest {
 
     @Test
     fun findByIdTest() {
-        `when`(messageEntityRepository.findOneById(1)).thenReturn(messageEntity)
+        `when`(messageEntityRepository.findById(messageEntity.id)).thenReturn(Optional.of(messageEntity))
 
-        val message = messageEntityService.findById(1)
+        val message = messageEntityService.findById(messageEntity.id)
 
         assert(message!! == messageEntity)
+        verify(messageEntityRepository, times(1)).findById(messageEntity.id)
     }
 
     @Test

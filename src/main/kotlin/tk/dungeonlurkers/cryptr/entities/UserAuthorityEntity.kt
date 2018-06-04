@@ -1,20 +1,20 @@
 package tk.dungeonlurkers.cryptr.entities
 
 import org.hibernate.annotations.GenericGenerator
-import java.time.Instant
+import org.springframework.security.core.GrantedAuthority
 import java.util.*
 import javax.persistence.Column
-import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
-@Entity
-data class MessageEntity(
+data class UserAuthorityEntity(
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    val id: UUID = UUID(0, 0),
-    val body: String = "",
-    val createTime: Date = Date.from(Instant.EPOCH)
-)
+    val id: UUID,
+    private val authority: String
+) : GrantedAuthority {
+
+    override fun getAuthority() = authority
+}
