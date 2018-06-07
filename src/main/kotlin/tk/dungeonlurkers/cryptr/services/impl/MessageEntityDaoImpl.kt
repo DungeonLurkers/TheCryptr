@@ -8,7 +8,7 @@ import tk.dungeonlurkers.cryptr.services.MessageEntityDao
 import java.util.*
 
 @Service
-class MessageEntityServiceImpl(
+class MessageEntityDaoImpl(
     @Autowired
     private val messageEntityRepository: MessageEntityRepository
 ) : MessageEntityDao {

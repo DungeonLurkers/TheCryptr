@@ -21,8 +21,9 @@ class UserEntityDaoTest {
     fun setUp() {
         val username = "testUserName"
         val password = "testPass"
+        val email = "testMail@mail.pl"
 
-        userEntity = UserEntity(username, password)
+        userEntity = UserEntity(username, password, email)
         userDto = UserDto(
             userEntity.id,
             userEntity.isEnabled,
@@ -30,7 +31,8 @@ class UserEntityDaoTest {
             userEntity.username,
             userEntity.isAccountNonExpired,
             userEntity.isAccountNonLocked,
-            userEntity.authorities
+            userEntity.authorities,
+            userEntity.email
         )
 
         userEntityRepository = mock(UserEntityRepository::class.java)

@@ -3,6 +3,7 @@ package tk.dungeonlurkers.cryptr.entities
 import org.hibernate.annotations.GenericGenerator
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.crypto.keygen.KeyGenerators
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -22,9 +23,11 @@ data class UserEntity(
     private val username: String,
     private val accountNonExpired: Boolean,
     private val accountNonLocked: Boolean,
-    private val authorities: MutableCollection<out GrantedAuthority>
+    private val authorities: MutableCollection<out GrantedAuthority>,
+    val email: String,
+    private val salt: String
 ) : UserDetails {
-    constructor(username: String, password: String):
+    constructor(username: String, password: String, email: String):
             this(
                 UUID.randomUUID(),
                 true,
@@ -33,13 +36,15 @@ data class UserEntity(
                 username,
                 true,
                 true,
-                mutableListOf<GrantedAuthority>()
+                mutableListOf<GrantedAuthority>(),
+                email,
+                KeyGenerators.string().generateKey()
             )
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = authorities
     override fun isEnabled(): Boolean = enabled
     override fun getUsername(): String = username
     override fun isCredentialsNonExpired(): Boolean = credentialsNonExpired
-    override fun getPassword(): String = password
+    override fun getPassword(): String = "$password$salt"
     override fun isAccountNonExpired(): Boolean = accountNonExpired
     override fun isAccountNonLocked(): Boolean = accountNonLocked
 }

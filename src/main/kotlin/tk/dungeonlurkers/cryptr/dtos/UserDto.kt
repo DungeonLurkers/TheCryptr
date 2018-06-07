@@ -4,15 +4,16 @@ import org.springframework.security.core.GrantedAuthority
 import java.util.*
 
 class UserDto (
-    val id: UUID,
-    val enabled: Boolean,
-    val credentialsNonExpired: Boolean,
-    val username: String,
-    val accountNonExpired: Boolean,
-    val accountNonLocked: Boolean,
-    val authorities: MutableCollection<out GrantedAuthority>
+    val id: UUID = UUID(0 ,0),
+    val enabled: Boolean = true,
+    val credentialsNonExpired: Boolean = true,
+    val username: String = "",
+    val accountNonExpired: Boolean = true,
+    val accountNonLocked: Boolean = true,
+    val authorities: MutableCollection<out GrantedAuthority> = mutableListOf<GrantedAuthority>(),
+    val email: String = ""
 ) {
-    constructor(username: String) :
+    constructor(username: String, email: String) :
             this(
                 UUID.randomUUID(),
                 true,
@@ -20,6 +21,7 @@ class UserDto (
                 username,
                 true,
                 true,
-                mutableListOf<GrantedAuthority>()
+                mutableListOf<GrantedAuthority>(),
+                email
             )
 }

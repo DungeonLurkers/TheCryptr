@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import tk.dungeonlurkers.cryptr.entities.MessageEntity
 import tk.dungeonlurkers.cryptr.repos.MessageEntityRepository
 import tk.dungeonlurkers.cryptr.services.MessageEntityDao
-import tk.dungeonlurkers.cryptr.services.impl.MessageEntityServiceImpl
+import tk.dungeonlurkers.cryptr.services.impl.MessageEntityDaoImpl
 import java.time.Instant
 import java.util.*
 
@@ -21,7 +21,7 @@ class MessageDaoTest {
     @Before
     fun setUp() {
         messageEntityRepository = mock(MessageEntityRepository::class.java)
-        messageEntityService = MessageEntityServiceImpl(messageEntityRepository)
+        messageEntityService = MessageEntityDaoImpl(messageEntityRepository)
 
         val date = Date.from(Instant.now())
         val messageBody = "TestMessageLel"
