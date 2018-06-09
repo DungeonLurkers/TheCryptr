@@ -1,7 +1,7 @@
 package tk.dungeonlurkers.cryptr.dtos
 
 class UserCreateDto(
-    val password: String = "",
+    var password: String = "",
     val username: String = "",
     val email: String = ""
 )

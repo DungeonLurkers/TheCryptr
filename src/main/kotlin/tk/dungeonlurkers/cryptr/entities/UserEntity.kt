@@ -25,7 +25,7 @@ data class UserEntity(
     private val accountNonLocked: Boolean,
     private val authorities: MutableCollection<out GrantedAuthority>,
     val email: String,
-    private val salt: String
+    var salt: String
 ) : UserDetails {
     constructor(username: String, password: String, email: String):
             this(
@@ -44,7 +44,7 @@ data class UserEntity(
     override fun isEnabled(): Boolean = enabled
     override fun getUsername(): String = username
     override fun isCredentialsNonExpired(): Boolean = credentialsNonExpired
-    override fun getPassword(): String = "$password$salt"
+    override fun getPassword(): String = password
     override fun isAccountNonExpired(): Boolean = accountNonExpired
     override fun isAccountNonLocked(): Boolean = accountNonLocked
 }

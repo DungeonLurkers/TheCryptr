@@ -21,7 +21,7 @@ class HibernateConfig {
     @Bean(name = ["sessionFactory"])
     fun getSessionFactory(@Qualifier("dataSource") dataSource: DataSource): SessionFactory {
         val sessionBuilder = LocalSessionFactoryBuilder(dataSource)
-        sessionBuilder.scanPackages("tk.avabin.cryptr.entities")
+        sessionBuilder.scanPackages("tk.dungeonlurkers.cryptr.entities")
         sessionBuilder.setProperty(AvailableSettings.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect")
         sessionBuilder.setProperty(AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS, "false")
         sessionBuilder.setProperty(AvailableSettings.HBM2DDL_AUTO, "update")

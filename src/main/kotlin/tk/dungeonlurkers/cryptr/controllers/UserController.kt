@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.keygen.KeyGenerators
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,7 +24,8 @@ import javax.persistence.EntityNotFoundException
 @RequestMapping("users")
 class UserController(
     @Autowired val modelMapper: ModelMapper,
-    @Autowired val userEntityDao: UserEntityDao
+    @Autowired val userEntityDao: UserEntityDao,
+    @Autowired val passwordEncoder: PasswordEncoder
 ) {
 
     @GetMapping("/id/{id}")
@@ -44,6 +47,7 @@ class UserController(
         if (userCreateDto.password == "") errorMessage = "#$errorMessage{NO_PASSWORD}"
         if (userCreateDto.email == "") errorMessage = "$errorMessage{NO_EMAIL}"
         if (errorMessage != "") return ResponseEntity(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY)
+        userCreateDto.password = passwordEncoder.encode("${userCreateDto.password}${KeyGenerators.string()}")
         val user = modelMapper.map(userCreateDto, UserEntity::class.java)
         userEntityDao.saveOrUpdate(user)
         return ResponseEntity(HttpStatus.CREATED)
